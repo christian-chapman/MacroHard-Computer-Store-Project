@@ -1,23 +1,12 @@
 const express = require('express')
 const mysql = require('mysql')
-import db from "./connect.js"
+const connection = require("./connectDB.js")
 
-db.connect(err => {
-    if(err){
-        throw err
-    }
-    console.log('MySQL Connection')
-})
 
-const app = express()
-
-db.query("SELECT * FROM customeraccount", (err, result, fields) => {
-    if(err) throw err
+let CustomerAccounts
+connection.getCustomerAccounts().then(result=> {
+    CustomerAccounts = result
     console.log(result)
 })
-db.end(err => {
-    if(err){
-        throw err
-    }
-    console.log('Closed connection to DB')
-})
+
+
